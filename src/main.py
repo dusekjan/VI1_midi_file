@@ -4,12 +4,14 @@ from connected_componentes import *
 from staff import calculate_thickness_spacing, remove_staff_lines, coordinator
 from segmenter import Segmenter
 from fit import predict
+from midi import make_midi_file
 from glob import glob
 import cv2
 import pickle
 from scipy.ndimage import binary_fill_holes
 from skimage.morphology import thin
 import argparse
+import os
 
 label_map = {
     0: {
@@ -200,18 +202,23 @@ def recognize(out_file, most_common, coord_imgs, imgs_with_staff, imgs_spacing, 
     if len(coord_imgs) > 1:
         out_file.write("}")
     print("###########################", res, "##########################")
+    return res
 
 
 def main(input_path, output_path):
+    print("V MAINU")
+    print(input_path)
     imgs_path = sorted(glob(f'{input_path}/*'))
+    print("imgs_path: ", imgs_path)
     for img_path in imgs_path:
-        img_name = img_path.split('/')[-1].split('.')[0]
+        img_name = img_path.split('\\')[-1].split('.')[0]
+        print(f"Output_path='{output_path}' img_name='{img_name}'")
         out_file = open(f'{output_path}/{img_name}.txt', "w")
         print(f"Processing new image {img_name}...")
         img = io.imread(img_path)
         img = gray_img(img)
         horizontal = IsHorizontal(img)
-        if horizontal == False:
+        if not horizontal:
             theta = deskew(img)
             img = rotation(img, theta)
             img = get_gray(img)
@@ -239,13 +246,17 @@ def main(input_path, output_path):
             coord_imgs.append(no_staff_img)
 
         print("Recognize...")
-        recognize(out_file, most_common, coord_imgs,
+        notes = recognize(out_file, most_common, coord_imgs,
                   imgs_with_staff, imgs_spacing, imgs_rows)
+
+        octave = input("O chcete posunout: ")
+        make_midi_file(notes, int(octave), output_path)
         out_file.close()
         print("Done...")
 
 
 if __name__ == "__main__":
+    print("CWD: " + os.getcwd())
     parser = argparse.ArgumentParser()
 
     parser.add_argument("inputfolder", help="Input File")

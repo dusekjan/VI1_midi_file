@@ -101,7 +101,7 @@ def run_experiment(classifier='SVM', feature_set='hog', dir_names=[]):
     classifiers, random_seed = load_classifiers()
 
     train_features, test_features, train_labels, test_labels = train_test_split(
-        features, labels, test_size=0.2, random_state=random_seed)
+        features, labels, test_size=0.2, train_size=0.2, random_state=random_seed)
 
     model = classifiers[classifier]
     print('############## Training', classifier, "##############")
