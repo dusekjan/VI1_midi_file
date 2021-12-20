@@ -1,10 +1,10 @@
-# Výpočetní inteligence 1 - Semestrální projekt - Dušek Jan
+# Semestrální projekt - Výpočetní inteligence 1 - Dušek Jan
 
 ## Generování MIDI souboru z obrázku notového zápisu
 Projekt je zaměřen na čtení obrázku ve formátu .png z kterého detekuje notový zápis.
 Po zdárném detekování notového zápisu následuje procedura, která vede k zjištění použitých not a následnému vygenerování 
 MIDI souboru, který lze použít například v libovolném hudebním softwaru.
-###Mozart
+### Mozart
 Již zmíněnou proceduru pro čtení not zajišťuje volně dostupný projekt Mozart:<br>
 [An optical music recognition Mozart](https://github.com/aashrafh/Mozart) <br>
 Na odkazu výše je podrobný popis jak celá procedura probíhá, ve zkratce řečeno: <br>
@@ -43,3 +43,5 @@ Spuštění je stejné jako u projektu Mozart, který je popsán v jeho dokument
 - [scikit-image](https://scikit-image.org/)
 - [MIDIUtil](https://github.com/MarkCWirt/MIDIUtil)
 - [Mozart](https://github.com/aashrafh/Mozart)
+
+https://github.com/dusekjan/VI1_midi_file
